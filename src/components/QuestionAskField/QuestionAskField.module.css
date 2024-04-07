@@ -1,0 +1,27 @@
+.question-ask-field {
+    position: relative;
+  }
+  
+  .input-field {
+    /* width: 100%; */
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+  }
+  
+  .send-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+  }
+  
+  .send-icon:hover {
+    color: #333;
+  }
+  

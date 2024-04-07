@@ -1,0 +1,19 @@
+/* ChatWindow.module.css */
+.chat-window-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .chat-window {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .question-ask-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
