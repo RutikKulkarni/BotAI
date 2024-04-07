@@ -4,7 +4,8 @@
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  width: 50%;
+  width: 70%;
+  margin-left: 180px;
 }
 
 .textContainer {

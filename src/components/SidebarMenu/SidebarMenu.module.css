@@ -6,8 +6,25 @@
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  justify-content: left;
   font-size: 20px;
   margin-bottom: 10px;
+  color: black;
+  cursor: pointer;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+
+.icon2 {
+  width: 25px;
+  height: 25px;
+  margin-left: 35%;
 }
 
 .conversationList {
@@ -23,8 +40,17 @@
   margin-bottom: 5px;
   background-color: #e0e0e0;
   transition: background-color 0.3s ease;
+  color: var(--dark-secondary-bg);
 }
 
 .conversationItem:hover {
   background-color: #ccc;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--dark-secondary-bg);
 }

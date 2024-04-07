@@ -1,24 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ChatWindow from "./ChatWindow/ChatWindow";
-import SidebarMenu from "./SidebarMenu/SidebarMenu"; 
-// import styles from "./Main.module.css"; 
+import SidebarMenu from "./SidebarMenu/SidebarMenu";
 
 const Main = () => {
-  const conversations = [
-    { id: 1, title: "Conversation 1" },
-    { id: 2, title: "Conversation 2" },
-    { id: 3, title: "Conversation 3" }
-  ];
+  const [activeConversation, setActiveConversation] = useState(null);
+  const [conversations, setConversations] = useState([]);
+
+  useEffect(() => {
+    const savedConversations =
+      JSON.parse(localStorage.getItem("savedConversations")) || [];
+    setConversations(savedConversations);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("savedConversations", JSON.stringify(conversations));
+  }, [conversations]);
 
   const handleSelectConversation = (conversation) => {
-    console.log("Selected conversation:", conversation);
+    setActiveConversation(conversation.id);
+  };
+
+  const handleStartNewConversation = () => {
+    const newConversationId = Date.now();
+    const newConversation = {
+      id: newConversationId,
+      title: `Conversation ${newConversationId}`,
+    };
+    setConversations([...conversations, newConversation]);
+    setActiveConversation(newConversationId);
+  };
+
+  const handleDeleteConversation = (conversationId) => {
+    const updatedConversations = conversations.filter(
+      (conversation) => conversation.id !== conversationId
+    );
+    setConversations(updatedConversations);
+    localStorage.setItem(
+      "savedConversations",
+      JSON.stringify(updatedConversations)
+    );
+
+    if (activeConversation === conversationId) {
+      setActiveConversation(null);
+    }
   };
 
   return (
-    // <div className={styles.container}>
     <div>
-      {/* <SidebarMenu conversations={conversations} onSelectConversation={handleSelectConversation} /> */}
-      <ChatWindow />
+      <SidebarMenu
+        conversations={conversations}
+        onSelectConversation={handleSelectConversation}
+        onStartNewConversation={handleStartNewConversation}
+        onDeleteConversation={handleDeleteConversation}
+      />
+      {activeConversation && <ChatWindow conversationId={activeConversation} />}
     </div>
   );
 };
