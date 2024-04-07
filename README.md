@@ -6,7 +6,7 @@ BotAI is a ReactJS web application designed to provide users with the ability to
 
 To get started with BotAI, follow these instructions:
 
-1. Clone the repository: `git clone https://github.com/your/repository.git`
+1. Clone the repository: `git clone https://github.com/RutikKulkarni/BotAI.git`
 2. Navigate to the project directory: `cd BotAI`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
