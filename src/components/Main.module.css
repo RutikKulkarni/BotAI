@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+}
+
+.chat-window {
+  flex: 1;
+  background-color: #fff;
+}

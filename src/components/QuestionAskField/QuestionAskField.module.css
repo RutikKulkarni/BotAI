@@ -1,27 +1,35 @@
-.question-ask-field {
+.container {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  
+  .inputContainer {
     position: relative;
   }
   
-  .input-field {
-    /* width: 100%; */
-    padding: 10px 15px;
-    font-size: 16px;
+  .inputField {
+    width: calc(100% + 50px);
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
     border: 2px solid #ccc;
-    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    font-size: 16px;
     outline: none;
+    border-width: var(--border-width);
   }
   
-  .send-icon {
+  .sendIcon {
     position: absolute;
     top: 50%;
-    right: 15px;
+    right: -30px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #555;
-    transition: color 0.3s ease;
-  }
-  
-  .send-icon:hover {
-    color: #333;
   }
   

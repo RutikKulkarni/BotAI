@@ -1,19 +1,69 @@
-/* ChatWindow.module.css */
-.chat-window-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .chat-window {
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .question-ask-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
+.container {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 50%;
+}
+
+.textContainer {
+  text-align: left;
+}
+
+.chatContainer {
+  width: 100%;
+}
+
+.userMessageContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.aiMessageContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.messageContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.messageContent {
+  display: flex;
+  align-items: flex-start;
+}
+
+.messageText {
+  display: flex;
+  flex-direction: column;
+}
+
+.userMessage {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 35px;
+}
+
+.aiMessage {
+  background-color: #d3e0ff;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.senderName {
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
