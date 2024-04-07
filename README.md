@@ -24,7 +24,8 @@ To get started with BotAI, follow these instructions:
 
 Mock AI model responses can be provided from a custom JSON file, which includes responses for specific questions. Sample data is available for evaluation purposes and can be expanded as needed.
 
-`[
+```
+[
     {
       "id": 1,
       "question": "What's the difference between GET and POST requests?",
@@ -35,7 +36,8 @@ Mock AI model responses can be provided from a custom JSON file, which includes 
       "question": "Can you explain RESTful APIs?",
       "response": "RESTful APIs are designed around the REST (Representational State Transfer) architecture, which uses HTTP requests to access and manipulate data. They follow a stateless, client-server, cacheable communications protocol."
     }
-]`
+]
+```
 
 ## Bonus Extensions
 
