@@ -1,13 +1,78 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary-bg: rgba(151, 133, 186, 1);
+  --secondary-bg: rgba(215, 199, 244, 1);
+  --text-color: rgba(255, 255, 255, 1);
+
+  --primary-font: "Ubuntu", sans-serif;
+  --secondary-font: "Open Sans", sans-serif;
+
+  --border-width: 1px;
+
+  --dark-primary-bg: rgba(60, 60, 60, 1);
+  --dark-secondary-bg: rgba(0, 0, 0, 0.9);
+  --dark-text-color: rgba(255, 255, 255, 1);
+
+  --light-primary-bg: rgba(249, 250, 250, 1);
+  --light-secondary-bg: rgba(255, 255, 255, 1);
+  --light-text-color: rgba(0, 0, 0, 1);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: var(--primary-font);
+  color: var(--text-color);
+  background-color: var(--primary-bg);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--primary-font);
+  color: var(--text-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: var(--secondary-font);
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: var(--secondary-font);
 }
