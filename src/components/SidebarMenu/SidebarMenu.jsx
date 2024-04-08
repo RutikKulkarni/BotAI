@@ -60,17 +60,19 @@ const SidebarMenu = ({
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.title} onClick={handleStartNewConversation}>
-        <img src={AiIcon} alt="AI Icon" className={styles.icon} />
-        New Chat
-        <img src={newChatIcon} alt="New Chat Icon" className={styles.icon2} />
+      <div className={styles.titleContainer}>
+        <div className={styles.title} onClick={handleStartNewConversation}>
+          <img src={AiIcon} alt="AI Icon" className={styles.icon} />
+          New Chat
+          <img src={newChatIcon} alt="New Chat Icon" className={styles.icon2} />
+        </div>
       </div>
 
       <ul className={styles.conversationList}>
         {conversations.map((conversation) => (
           <li key={conversation.id} className={styles.conversationItem}>
-            {renameId === conversation.id ? (
-              <>
+            <div>
+              {renameId === conversation.id ? (
                 <input
                   type="text"
                   value={newTitle}
@@ -80,24 +82,31 @@ const SidebarMenu = ({
                   autoFocus
                   required
                 />
-              </>
-            ) : (
-              <>
-                <span onClick={() => handleSelectConversation(conversation)}>
-                  {conversation.title}
-                </span>
-                <MdOutlineModeEdit
-                  onClick={() => handleRenameStart(conversation.id, conversation.title)}
-                  className={styles.renameButton}
-                />
-              </>
-            )}
-            <button
-              onClick={() => handleDeleteConversation(conversation.id)}
-              className={styles.deleteButton}
-            >
-              <MdOutlineDeleteOutline size={15} />
-            </button>
+              ) : (
+                <>
+                  <span
+                    onClick={() => handleSelectConversation(conversation)}
+                    className={styles.conversationName}
+                  >
+                    {conversation.title}
+                  </span>
+                </>
+              )}
+            </div>
+            <div>
+              <MdOutlineModeEdit
+                onClick={() =>
+                  handleRenameStart(conversation.id, conversation.title)
+                }
+                className={styles.renameButton}
+                size={18}
+              />
+              <MdOutlineDeleteOutline
+                onClick={() => handleDeleteConversation(conversation.id)}
+                className={styles.deleteButton}
+                size={18}
+              />
+            </div>
           </li>
         ))}
       </ul>
