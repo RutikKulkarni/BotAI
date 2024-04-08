@@ -23,11 +23,6 @@ Mock AI model responses can be provided from a custom JSON file, which includes 
       "question": "What's the difference between GET and POST requests?",
       "response": "GET requests are used to retrieve data from the server, and are visible in the URL. POST requests are used to send data to the server to create/update resources, and the data is included in the body of the request, not visible in the URL."
     },
-    {
-      "id": 2,
-      "question": "Can you explain RESTful APIs?",
-      "response": "RESTful APIs are designed around the REST (Representational State Transfer) architecture, which uses HTTP requests to access and manipulate data. They follow a stateless, client-server, cacheable communications protocol."
-    }
 ]
 ```
 
