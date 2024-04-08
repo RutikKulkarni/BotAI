@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import styles from "./SidebarMenu.module.css";
 import AiIcon from "../../assets/ai-icon.png";
@@ -9,7 +9,11 @@ const SidebarMenu = ({
   onSelectConversation,
   onStartNewConversation,
   onDeleteConversation,
+  onRenameConversation,
 }) => {
+  const [newTitle, setNewTitle] = useState("");
+  const [renameId, setRenameId] = useState(null);
+
   const handleStartNewConversation = () => {
     onStartNewConversation();
   };
@@ -20,6 +24,22 @@ const SidebarMenu = ({
 
   const handleDeleteConversation = (conversationId) => {
     onDeleteConversation(conversationId);
+  };
+
+  const handleRenameStart = (conversationId, title) => {
+    setNewTitle(title);
+    setRenameId(conversationId);
+  };
+
+  const handleRenameCancel = () => {
+    setNewTitle("");
+    setRenameId(null);
+  };
+
+  const handleRenameConfirm = (conversationId) => {
+    onRenameConversation(conversationId, newTitle);
+    setNewTitle("");
+    setRenameId(null);
   };
 
   return (
@@ -33,9 +53,28 @@ const SidebarMenu = ({
       <ul className={styles.conversationList}>
         {conversations.map((conversation) => (
           <li key={conversation.id} className={styles.conversationItem}>
-            <span onClick={() => handleSelectConversation(conversation)}>
-              {conversation.title}
-            </span>
+            {renameId === conversation.id ? (
+              <>
+                <input
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                />
+                <button onClick={() => handleRenameConfirm(conversation.id)}>
+                  Confirm
+                </button>
+                <button onClick={handleRenameCancel}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <span onClick={() => handleSelectConversation(conversation)}>
+                  {conversation.title}
+                </span>
+                <button onClick={() => handleRenameStart(conversation.id, conversation.title)}>
+                  Rename
+                </button>
+              </>
+            )}
             <button
               onClick={() => handleDeleteConversation(conversation.id)}
               className={styles.deleteButton}

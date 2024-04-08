@@ -2,6 +2,8 @@
 
 BotAI is a ReactJS web application designed to provide users with the ability to engage in conversations with an AI model. The application allows users to interact with the AI model, provide feedback on its responses, and save conversations for future reference. Additionally, users can view aggregated feedback from past conversations and filter them based on ratings.
 
+- *Live URL:*  [https://bot-ai-five.vercel.app/](https://bot-ai-five.vercel.app/)
+
 ## Features
 
 - **Chat with AI Model**: Engage in conversations with an AI model.

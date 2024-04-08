@@ -22,9 +22,10 @@ const Main = () => {
 
   const handleStartNewConversation = () => {
     const newConversationId = Date.now();
+    const newConversationTitle = `Conversation ${conversations.length + 1}`;
     const newConversation = {
       id: newConversationId,
-      title: `Conversation ${newConversationId}`,
+      title: newConversationTitle,
     };
     setConversations([...conversations, newConversation]);
     setActiveConversation(newConversationId);
@@ -45,6 +46,14 @@ const Main = () => {
     }
   };
 
+  const handleRenameConversation = (conversationId, newTitle) => {
+    setConversations(prevConversations =>
+      prevConversations.map(conversation =>
+        conversation.id === conversationId ? { ...conversation, title: newTitle } : conversation
+      )
+    );
+  };
+
   return (
     <div>
       <SidebarMenu
@@ -52,6 +61,7 @@ const Main = () => {
         onSelectConversation={handleSelectConversation}
         onStartNewConversation={handleStartNewConversation}
         onDeleteConversation={handleDeleteConversation}
+        onRenameConversation={handleRenameConversation}
       />
       {activeConversation && <ChatWindow conversationId={activeConversation} />}
     </div>
