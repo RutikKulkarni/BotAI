@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MdOutlineDeleteOutline } from "react-icons/md";
+import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import styles from "./SidebarMenu.module.css";
 import AiIcon from "../../assets/ai-icon.png";
 import newChatIcon from "../../assets/new-chat.svg";
@@ -31,15 +31,31 @@ const SidebarMenu = ({
     setRenameId(conversationId);
   };
 
+  const handleRenameConfirm = (conversationId) => {
+    if (newTitle.trim() !== "") {
+      onRenameConversation(conversationId, newTitle);
+      setNewTitle("");
+      setRenameId(null);
+    }
+  };
+
   const handleRenameCancel = () => {
     setNewTitle("");
     setRenameId(null);
   };
 
-  const handleRenameConfirm = (conversationId) => {
-    onRenameConversation(conversationId, newTitle);
-    setNewTitle("");
-    setRenameId(null);
+  const handleBlur = (conversationId) => {
+    if (newTitle.trim() === "") {
+      handleRenameCancel();
+    } else {
+      handleRenameConfirm(conversationId);
+    }
+  };
+
+  const handleKeyDown = (e, conversationId) => {
+    if (e.key === "Enter") {
+      handleRenameConfirm(conversationId);
+    }
   };
 
   return (
@@ -59,20 +75,21 @@ const SidebarMenu = ({
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
+                  onBlur={() => handleBlur(conversation.id)}
+                  onKeyDown={(e) => handleKeyDown(e, conversation.id)}
+                  autoFocus
+                  required
                 />
-                <button onClick={() => handleRenameConfirm(conversation.id)}>
-                  Confirm
-                </button>
-                <button onClick={handleRenameCancel}>Cancel</button>
               </>
             ) : (
               <>
                 <span onClick={() => handleSelectConversation(conversation)}>
                   {conversation.title}
                 </span>
-                <button onClick={() => handleRenameStart(conversation.id, conversation.title)}>
-                  Rename
-                </button>
+                <MdOutlineModeEdit
+                  onClick={() => handleRenameStart(conversation.id, conversation.title)}
+                  className={styles.renameButton}
+                />
               </>
             )}
             <button
