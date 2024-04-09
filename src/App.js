@@ -1,10 +1,10 @@
 import React from "react";
-import Main from "./components/Main";
+import Assemble from "./components/Assemble";
 
 function App() {
   return (
     <div className="app">
-      <Main />
+      <Assemble />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ChatWindow from "./ChatWindow/ChatWindow";
 import SidebarMenu from "./SidebarMenu/SidebarMenu";
+import Home from "./Home/Home";
 
-const Main = () => {
+const Assemble = () => {
   const [activeConversation, setActiveConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
 
@@ -121,6 +122,7 @@ const Main = () => {
         onDeleteConversation={handleDeleteConversation}
         onRenameConversation={handleRenameConversation}
       />
+      <Home/>
       <ChatWindow
         conversationId={activeConversation}
         onAskQuestion={handleAskQuestionInActiveConversation}
@@ -129,4 +131,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Assemble;
