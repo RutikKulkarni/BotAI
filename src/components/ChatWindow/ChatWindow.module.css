@@ -76,3 +76,22 @@
 .textContainer::-webkit-scrollbar-thumb {
   display: none;
 }
+
+.botName {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  margin-left: 300px;
+  margin-top: 10px;
+  color: var(--secondary-bg);
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
