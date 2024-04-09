@@ -6,6 +6,7 @@ import AiIcon from "../../assets/ai-icon.png";
 
 const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
   const messageContainerRef = useRef(null);
 
   useEffect(() => {
@@ -45,6 +46,11 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
         JSON.stringify(updatedMessages)
       );
     }
+  };
+
+  const handleClickQuestion = (question) => {
+    setSelectedQuestion(question);
+    handleAskQuestion(question);
   };
 
   return (
@@ -95,12 +101,45 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
       ) : (
         <div className={styles.container}>
           <div className={styles.centered}>
-            <h1>Hii</h1>
+            <h1>How Can I Help You Today?</h1>
+            <div className={styles.homeIcon}>
+              <img src={AiIcon} alt="AI Icon" />
+            </div>
+            <div className={styles.questionContainer}>
+              <div
+                className={styles.question}
+                onClick={() => handleClickQuestion("Question 1")}
+              >
+                Question 1
+              </div>
+              <div
+                className={styles.question}
+                onClick={() => handleClickQuestion("Question 2")}
+              >
+                Question 2
+              </div>
+              <div
+                className={styles.question}
+                onClick={() => handleClickQuestion("Question 3")}
+              >
+                Question 3
+              </div>
+              <div
+                className={styles.question}
+                onClick={() => handleClickQuestion("Question 4")}
+              >
+                Question 4
+              </div>
+            </div>
           </div>
         </div>
       )}
       <div>
-        <QuestionAskField onAskQuestion={handleAskQuestion} />
+        <QuestionAskField
+          onAskQuestion={handleAskQuestion}
+          initialQuestion={selectedQuestion}
+          autoSubmit
+        />
       </div>
     </div>
   );

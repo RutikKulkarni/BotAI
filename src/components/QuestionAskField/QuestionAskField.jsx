@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { VscSend } from "react-icons/vsc";
 import styles from "./QuestionAskField.module.css";
 
-const QuestionAskField = ({ onAskQuestion }) => {
+const QuestionAskField = ({ onAskQuestion, initialQuestion }) => {
   const [question, setQuestion] = useState("");
+
+  useEffect(() => {
+    if (initialQuestion) {
+      setQuestion(initialQuestion);
+    }
+  }, [initialQuestion]);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
