@@ -3,6 +3,7 @@ import QuestionAskField from "../QuestionAskField/QuestionAskField";
 import styles from "./ChatWindow.module.css";
 import UserIcon from "../../assets/user-icon.png";
 import AiIcon from "../../assets/ai-icon.png";
+import { BiColor } from "react-icons/bi";
 
 const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
@@ -108,27 +109,31 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
             <div className={styles.questionContainer}>
               <div
                 className={styles.question}
-                onClick={() => handleClickQuestion("Question 1")}
+                onClick={() => handleClickQuestion("How do you handle data persistence in mobile applications?")}
               >
-                Question 1
+                <h3>How do you handle data persistence in mobile applications?</h3>
+                <span>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
-                onClick={() => handleClickQuestion("Question 2")}
+                onClick={() => handleClickQuestion("Can you explain the concept of domain-driven design?")}
               >
-                Question 2
+                <h3>Can you explain the concept of domain-driven design?</h3>
+                <span>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
-                onClick={() => handleClickQuestion("Question 3")}
+                onClick={() => handleClickQuestion("What is the role of machine learning in web development?")}
               >
-                Question 3
+                <h3>What is the role of machine learning in web development?</h3>
+                <span>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
-                onClick={() => handleClickQuestion("Question 4")}
+                onClick={() => handleClickQuestion("How do you stay updated with the latest technology trends?")}
               >
-                Question 4
+                <h3>How do you stay updated with the latest technology trends?</h3>
+                <span>Get immediate AI generated response</span>
               </div>
             </div>
           </div>
