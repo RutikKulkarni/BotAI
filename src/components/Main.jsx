@@ -10,6 +10,11 @@ const Main = () => {
     const savedConversations =
       JSON.parse(localStorage.getItem("savedConversations")) || [];
     setConversations(savedConversations);
+
+    const savedActiveConversation = localStorage.getItem("activeConversation");
+    if (savedActiveConversation) {
+      setActiveConversation(parseInt(savedActiveConversation));
+    }
   }, []);
 
   useEffect(() => {
@@ -18,6 +23,7 @@ const Main = () => {
 
   const handleSelectConversation = (conversation) => {
     setActiveConversation(conversation.id);
+    localStorage.setItem("activeConversation", conversation.id);
   };
 
   const handleStartNewConversation = () => {
@@ -26,9 +32,11 @@ const Main = () => {
     const newConversation = {
       id: newConversationId,
       title: newConversationTitle,
+      messages: [],
     };
     setConversations([...conversations, newConversation]);
     setActiveConversation(newConversationId);
+    localStorage.setItem("activeConversation", newConversationId);
   };
 
   const handleDeleteConversation = (conversationId) => {
@@ -43,14 +51,64 @@ const Main = () => {
 
     if (activeConversation === conversationId) {
       setActiveConversation(null);
+      localStorage.removeItem("activeConversation");
     }
   };
 
   const handleRenameConversation = (conversationId, newTitle) => {
-    setConversations(prevConversations =>
-      prevConversations.map(conversation =>
-        conversation.id === conversationId ? { ...conversation, title: newTitle } : conversation
+    setConversations((prevConversations) =>
+      prevConversations.map((conversation) =>
+        conversation.id === conversationId
+          ? { ...conversation, title: newTitle }
+          : conversation
       )
+    );
+  };
+
+  const handleAskQuestionInActiveConversation = (question) => {
+    if (activeConversation) {
+      handleAskQuestion(question, activeConversation);
+    } else {
+      const newConversationId = Date.now();
+      const newConversationTitle = `Conversation ${conversations.length + 1}`;
+      const newConversation = {
+        id: newConversationId,
+        title: newConversationTitle,
+        messages: [],
+      };
+      setConversations([...conversations, newConversation]);
+      setActiveConversation(newConversationId);
+      localStorage.setItem("activeConversation", newConversationId);
+      handleAskQuestion(question, newConversationId);
+    }
+  };
+
+  const handleAskQuestion = (question, conversationId) => {
+    const conversationsData = require("../data/conversations.json");
+    const answer = conversationsData.find(
+      (conversation) => conversation.question === question
+    )?.response;
+
+    const updatedMessages = [
+      ...(JSON.parse(localStorage.getItem(`conversation_${conversationId}`)) ||
+        []),
+      { text: question, sender: "User" },
+      {
+        text: answer || "Sorry, I don't have an answer for that.",
+        sender: "AI",
+      },
+    ];
+
+    setConversations((prevConversations) =>
+      prevConversations.map((conversation) =>
+        conversation.id === conversationId
+          ? { ...conversation, messages: updatedMessages }
+          : conversation
+      )
+    );
+    localStorage.setItem(
+      `conversation_${conversationId}`,
+      JSON.stringify(updatedMessages)
     );
   };
 
@@ -63,7 +121,10 @@ const Main = () => {
         onDeleteConversation={handleDeleteConversation}
         onRenameConversation={handleRenameConversation}
       />
-      {activeConversation && <ChatWindow conversationId={activeConversation} />}
+      <ChatWindow
+        conversationId={activeConversation}
+        onAskQuestion={handleAskQuestionInActiveConversation}
+      />
     </div>
   );
 };

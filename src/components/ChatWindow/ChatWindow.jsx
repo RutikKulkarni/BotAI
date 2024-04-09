@@ -4,7 +4,7 @@ import styles from "./ChatWindow.module.css";
 import UserIcon from "../../assets/user-icon.png";
 import AiIcon from "../../assets/ai-icon.png";
 
-const ChatWindow = ({ conversationId }) => {
+const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
 
@@ -15,7 +15,6 @@ const ChatWindow = ({ conversationId }) => {
   }, [conversationId]);
 
   useEffect(() => {
-    // Scroll to bottom of the message container when messages change
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop =
         messageContainerRef.current.scrollHeight;
@@ -23,23 +22,29 @@ const ChatWindow = ({ conversationId }) => {
   }, [messages]);
 
   const handleAskQuestion = (question) => {
-    const conversations = require("../../data/conversations.json");
-    const answer = conversations.find(
-      (conversation) => conversation.question === question
-    )?.response;
-    const newMessages = [
-      ...messages,
-      { text: question, sender: "User" },
-      {
-        text: answer || "Sorry, I don't have an answer for that.",
-        sender: "AI",
-      },
-    ];
-    setMessages(newMessages);
-    localStorage.setItem(
-      `conversation_${conversationId}`,
-      JSON.stringify(newMessages)
-    );
+    if (!conversationId) {
+      onAskQuestion(question);
+    } else {
+      const conversationsData = require("../../data/conversations.json");
+      const answer = conversationsData.find(
+        (conversation) => conversation.question === question
+      )?.response;
+
+      const updatedMessages = [
+        ...messages,
+        { text: question, sender: "User" },
+        {
+          text: answer || "Sorry, I don't have an answer for that.",
+          sender: "AI",
+        },
+      ];
+
+      setMessages(updatedMessages);
+      localStorage.setItem(
+        `conversation_${conversationId}`,
+        JSON.stringify(updatedMessages)
+      );
+    }
   };
 
   return (
