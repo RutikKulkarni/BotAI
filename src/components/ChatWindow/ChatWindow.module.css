@@ -68,3 +68,11 @@
   height: 30px;
   margin-right: 10px;
 }
+
+.textContainer::-webkit-scrollbar {
+  width: 0px;
+}
+
+.textContainer::-webkit-scrollbar-thumb {
+  display: none;
+}

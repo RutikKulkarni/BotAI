@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import QuestionAskField from "../QuestionAskField/QuestionAskField";
 import styles from "./ChatWindow.module.css";
 import UserIcon from "../../assets/user-icon.png";
@@ -6,12 +6,21 @@ import AiIcon from "../../assets/ai-icon.png";
 
 const ChatWindow = ({ conversationId }) => {
   const [messages, setMessages] = useState([]);
+  const messageContainerRef = useRef(null);
 
   useEffect(() => {
     const savedMessages =
       JSON.parse(localStorage.getItem(`conversation_${conversationId}`)) || [];
     setMessages(savedMessages);
   }, [conversationId]);
+
+  useEffect(() => {
+    // Scroll to bottom of the message container when messages change
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleAskQuestion = (question) => {
     const conversations = require("../../data/conversations.json");
@@ -36,7 +45,11 @@ const ChatWindow = ({ conversationId }) => {
   return (
     <div className={styles.chatContainer}>
       <div className={styles.container}>
-        <div className={styles.textContainer}>
+        <div
+          ref={messageContainerRef}
+          className={styles.textContainer}
+          style={{ maxHeight: "calc(100vh - 150px)", overflow: "auto" }}
+        >
           {Array.isArray(messages) &&
             messages.map((message, index) =>
               message.text ? (
