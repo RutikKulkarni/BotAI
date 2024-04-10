@@ -112,7 +112,26 @@
   background-color: #f0f0f0;
   padding: 10px;
   border-radius: 5px;
-  color: black;
+  color: var(--light-text-color);
+  text-align: left;
+  margin: 5px;
+}
+
+.question h3 {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  color: var(--light-text-color);
+  text-align: left;
+  margin: 5px;
+}
+
+.spanText {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--light-text-color);
   text-align: left;
   margin: 5px;
 }

@@ -112,28 +112,28 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
                 onClick={() => handleClickQuestion("How do you handle data persistence in mobile applications?")}
               >
                 <h3>How do you handle data persistence in mobile applications?</h3>
-                <span>Get immediate AI generated response</span>
+                <span className={styles.spanText}>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
                 onClick={() => handleClickQuestion("Can you explain the concept of domain-driven design?")}
               >
                 <h3>Can you explain the concept of domain-driven design?</h3>
-                <span>Get immediate AI generated response</span>
+                <span className={styles.spanText}>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
                 onClick={() => handleClickQuestion("What is the role of machine learning in web development?")}
               >
                 <h3>What is the role of machine learning in web development?</h3>
-                <span>Get immediate AI generated response</span>
+                <span className={styles.spanText}>Get immediate AI generated response</span>
               </div>
               <div
                 className={styles.question}
                 onClick={() => handleClickQuestion("How do you stay updated with the latest technology trends?")}
               >
                 <h3>How do you stay updated with the latest technology trends?</h3>
-                <span>Get immediate AI generated response</span>
+                <span className={styles.spanText}>Get immediate AI generated response</span>
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
       <div>
         <QuestionAskField
           onAskQuestion={handleAskQuestion}
-          initialQuestion={selectedQuestion}
+          // initialQuestion={selectedQuestion}
           autoSubmit
         />
       </div>
