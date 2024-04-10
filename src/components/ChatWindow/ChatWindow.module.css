@@ -137,11 +137,25 @@
   margin: 5px;
 }
 
-.feedbackButtons {
+.feedbackContainer {
   display: flex;
+  align-items: center;
+}
+
+.time {
+  margin-right: 5px; 
+}
+
+.messageTime {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.feedbackButtons {
+  margin-left: 10px;
 }
 
 .feedbackButtons > * {
-  margin: 10px;
-  margin-right: 5px; 
+  margin-right: 10px;
 }
