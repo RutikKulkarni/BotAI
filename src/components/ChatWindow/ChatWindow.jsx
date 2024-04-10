@@ -54,6 +54,7 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
           text: answer || "Sorry, I don't have an answer for that.",
           sender: "AI",
           time: currentTime,
+          rating: null,
         },
       ];
 
@@ -71,11 +72,12 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
   };
 
   const handleLikeDislike = (index, like) => {
-    if (!like) {
-      setShowModal(true);
+    if (like) {
+      setShowRatingModal(true);
       setFeedbackMessageIndex(index);
     } else {
-      setShowRatingModal(true);
+      setShowModal(true);
+      setFeedbackMessageIndex(index);
     }
   };
 
@@ -101,17 +103,8 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
 
   const submitRating = () => {
     setShowRatingModal(false);
-    const lastUserMessageIndex = messages.findIndex(
-      (message) => message.sender === "User"
-    );
-    const lastAiMessageIndex = messages
-      .slice()
-      .reverse()
-      .findIndex((message) => message.sender === "AI");
-    const aiMessageIndex = messages.length - 1 - lastAiMessageIndex;
-
     const updatedMessages = [...messages];
-    updatedMessages[aiMessageIndex].rating = selectedRating;
+    updatedMessages[feedbackMessageIndex].rating = selectedRating;
     setMessages(updatedMessages);
     localStorage.setItem(
       `conversation_${conversationId}`,
