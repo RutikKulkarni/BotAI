@@ -6,6 +6,7 @@ import AiIcon from "../../assets/ai-icon.png";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import Modal from "../Modal/Modal";
 import { TbBulb } from "react-icons/tb";
+import Rating from "react-rating";
 
 const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
@@ -14,6 +15,8 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [showModal, setShowModal] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [feedbackMessageIndex, setFeedbackMessageIndex] = useState(null);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [selectedRating, setSelectedRating] = useState(0);
   const messageContainerRef = useRef(null);
 
   useEffect(() => {
@@ -71,11 +74,14 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
     if (!like) {
       setShowModal(true);
       setFeedbackMessageIndex(index);
+    } else {
+      setShowRatingModal(true);
     }
   };
 
   const closeModal = () => {
     setShowModal(false);
+    setShowRatingModal(false);
   };
 
   const submitFeedback = (feedback) => {
@@ -83,10 +89,36 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
       const updatedMessages = [...messages];
       updatedMessages[feedbackMessageIndex].feedback = feedback;
       setMessages(updatedMessages);
+      localStorage.setItem(
+        `conversation_${conversationId}`,
+        JSON.stringify(updatedMessages)
+      );
       setFeedbackMessageIndex(null);
       closeModal();
       setFeedback("");
     }
+  };
+
+  const submitRating = () => {
+    setShowRatingModal(false);
+    const lastUserMessageIndex = messages.findIndex(
+      (message) => message.sender === "User"
+    );
+    const lastAiMessageIndex = messages
+      .slice()
+      .reverse()
+      .findIndex((message) => message.sender === "AI");
+    const aiMessageIndex = messages.length - 1 - lastAiMessageIndex;
+
+    const updatedMessages = [...messages];
+    updatedMessages[aiMessageIndex].rating = selectedRating;
+    setMessages(updatedMessages);
+    localStorage.setItem(
+      `conversation_${conversationId}`,
+      JSON.stringify(updatedMessages)
+    );
+    closeModal();
+    setSelectedRating(0);
   };
 
   return (
@@ -147,6 +179,31 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
                               </div>
                             ) : null}
                           </div>
+                          {message.rating && (
+                            <div className={styles.rating}>
+                              <span>
+                                <b>Rating: </b>
+                              </span>
+                              <Rating
+                                initialRating={message.rating}
+                                readonly
+                                emptySymbol={
+                                  <span
+                                    style={{ color: "gray", fontSize: "18px" }}
+                                  >
+                                    ☆
+                                  </span>
+                                }
+                                fullSymbol={
+                                  <span
+                                    style={{ color: "gold", fontSize: "18px" }}
+                                  >
+                                    ★
+                                  </span>
+                                }
+                              />
+                            </div>
+                          )}
                           {message.feedback && (
                             <div className={styles.feedback}>
                               <span>
@@ -233,31 +290,49 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
         </div>
       )}
       <div>
-        <QuestionAskField
-          onAskQuestion={handleAskQuestion}
-          // initialQuestion={selectedQuestion}
-          autoSubmit
-        />
+        <QuestionAskField onAskQuestion={handleAskQuestion} autoSubmit />
       </div>
-      <Modal isOpen={showModal} onClose={closeModal}>
-        <h2 style={{ color: "black", marginBottom: "20px" }}>
-          <TbBulb style={{ marginRight: "2px" }} /> Provide Additional Feedback
-        </h2>
-        <div className={styles.inputContainer}>
-          <textarea
-            type="text"
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            className={styles.textArea}
-            required
-          />
-          <button
-            onClick={() => submitFeedback(feedback)}
-            className={styles.submitButton}
-          >
-            Submit
-          </button>
-        </div>
+      <Modal isOpen={showModal || showRatingModal} onClose={closeModal}>
+        {showModal ? (
+          <>
+            <h2 style={{ color: "black", marginBottom: "20px" }}>
+              <TbBulb style={{ marginRight: "2px" }} /> Provide Additional
+              Feedback
+            </h2>
+            <div className={styles.inputContainer}>
+              <textarea
+                type="text"
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                className={styles.textArea}
+                required
+              />
+              <button
+                onClick={() => submitFeedback(feedback)}
+                className={styles.submitButton}
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 style={{ color: "black", marginBottom: "20px" }}>
+              Rate this response
+            </h2>
+            <div className={styles.ratingContainer}>
+              <Rating
+                onChange={(value) => setSelectedRating(value)}
+                initialRating={selectedRating}
+                emptySymbol={<span style={{ color: "gray" }}>☆</span>}
+                fullSymbol={<span style={{ color: "gold" }}>★</span>}
+              />
+            </div>
+            <button onClick={submitRating} className={styles.submitButton}>
+              Submit
+            </button>
+          </>
+        )}
       </Modal>
     </div>
   );

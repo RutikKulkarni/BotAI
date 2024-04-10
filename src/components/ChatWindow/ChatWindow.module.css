@@ -167,7 +167,8 @@
 }
 
 .feedback {
-  margin-top: 10px;
+  margin-top: 5px;
+  font-size: 15px;
 }
 
 .inputContainer {
@@ -199,4 +200,18 @@
 
 .submitButton:hover {
   background-color: var(--secondary-bg);
+}
+
+.rating {
+  font-size: 15px;
+}
+
+.ratingContainer {
+  display: inline-block;
+  font-size: 24px;
+}
+
+.ratingContainer > * {
+  font-size: 32px;
+  margin-right: 5px;
 }
