@@ -128,10 +128,20 @@
 }
 
 .spanText {
-  background-color: #f0f0f0;
   padding: 10px;
   border-radius: 5px;
-  color: var(--light-text-color);
+  font-size: 13px;
+  /* color: var(--light-text-color); */
+  color: #818181;
   text-align: left;
   margin: 5px;
+}
+
+.feedbackButtons {
+  display: flex;
+}
+
+.feedbackButtons > * {
+  margin: 10px;
+  margin-right: 5px; 
 }
