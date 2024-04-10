@@ -143,19 +143,60 @@
 }
 
 .time {
-  margin-right: 5px; 
+  margin-right: 5px;
+}
+
+.buttonsAndTime {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
 }
 
 .messageTime {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+  font-size: 12px;
 }
 
 .feedbackButtons {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .feedbackButtons > * {
   margin-right: 10px;
+  cursor: pointer;
+}
+
+.feedback {
+  margin-top: 10px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.textArea {
+  width: calc(100% - 20px);
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+}
+
+.submitButton {
+  width: 100px;
+  align-self: flex-end;
+  background-color: var(--primary-bg);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: var(--secondary-bg);
 }

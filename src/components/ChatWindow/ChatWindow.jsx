@@ -4,11 +4,16 @@ import styles from "./ChatWindow.module.css";
 import UserIcon from "../../assets/user-icon.png";
 import AiIcon from "../../assets/ai-icon.png";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import Modal from "../Modal/Modal";
+import { TbBulb } from "react-icons/tb";
 
 const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const [showModal, setShowModal] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [feedbackMessageIndex, setFeedbackMessageIndex] = useState(null);
   const messageContainerRef = useRef(null);
 
   useEffect(() => {
@@ -63,7 +68,25 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
   };
 
   const handleLikeDislike = (index, like) => {
-    // Logic for handling like and dislike removed
+    if (!like) {
+      setShowModal(true);
+      setFeedbackMessageIndex(index);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const submitFeedback = (feedback) => {
+    if (feedbackMessageIndex !== null) {
+      const updatedMessages = [...messages];
+      updatedMessages[feedbackMessageIndex].feedback = feedback;
+      setMessages(updatedMessages);
+      setFeedbackMessageIndex(null);
+      closeModal();
+      setFeedback("");
+    }
   };
 
   return (
@@ -105,8 +128,10 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
                             {message.sender === "User" ? "User" : "AI"}
                           </div>
                           <div>{message.text}</div>
-                          <div className={styles.messageTime}>
-                            {message.time}
+                          <div className={styles.buttonsAndTime}>
+                            <div className={styles.messageTime}>
+                              {message.time}
+                            </div>
                             {message.sender === "AI" &&
                             (index === messages.length - 1 ||
                               index === hoverIndex) ? (
@@ -122,6 +147,13 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
                               </div>
                             ) : null}
                           </div>
+                          {message.feedback && (
+                            <div className={styles.feedback}>
+                              <span>
+                                <b>Feedback:</b> {message.feedback}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -207,6 +239,26 @@ const ChatWindow = ({ conversationId, onAskQuestion }) => {
           autoSubmit
         />
       </div>
+      <Modal isOpen={showModal} onClose={closeModal}>
+        <h2 style={{ color: "black", marginBottom: "20px" }}>
+          <TbBulb style={{ marginRight: "2px" }} /> Provide Additional Feedback
+        </h2>
+        <div className={styles.inputContainer}>
+          <textarea
+            type="text"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            className={styles.textArea}
+            required
+          />
+          <button
+            onClick={() => submitFeedback(feedback)}
+            className={styles.submitButton}
+          >
+            Submit
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
