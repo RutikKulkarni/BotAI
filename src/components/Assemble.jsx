@@ -65,13 +65,6 @@ const Assemble = () => {
     );
   };
 
-  const questions = [
-    "How do you handle data persistence in mobile applications?",
-    "Can you explain the concept of domain-driven design?",
-    "What is the role of machine learning in web development?",
-    "How do you stay updated with the latest technology trends?",
-  ];
-
   const handleAskQuestionInActiveConversation = (question) => {
     if (activeConversation) {
       handleAskQuestion(question, activeConversation);
@@ -90,13 +83,7 @@ const Assemble = () => {
     }
   };
 
-  const getCurrentTime = () => {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
-
   const handleAskQuestion = (question, conversationId) => {
-    const currentTime = getCurrentTime();
     const conversationsData = require("../data/conversations.json");
     const answer = conversationsData.find(
       (conversation) => conversation.question === question
@@ -109,7 +96,6 @@ const Assemble = () => {
       {
         text: answer || "Sorry, I don't have an answer for that.",
         sender: "AI",
-        time: currentTime,
       },
     ];
 
@@ -135,10 +121,10 @@ const Assemble = () => {
         onDeleteConversation={handleDeleteConversation}
         onRenameConversation={handleRenameConversation}
       />
+      {/* {!activeConversation && <Home />} */}
       <ChatWindow
         conversationId={activeConversation}
         onAskQuestion={handleAskQuestionInActiveConversation}
-        questions={questions}
       />
     </div>
   );

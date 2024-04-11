@@ -8,7 +8,7 @@ import Modal from "../Modal/Modal";
 import { TbBulb } from "react-icons/tb";
 import Rating from "react-rating";
 
-const ChatWindow = ({ conversationId, onAskQuestion, questions }) => {
+const ChatWindow = ({ conversationId, onAskQuestion }) => {
   const [messages, setMessages] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [hoverIndex, setHoverIndex] = useState(-1);
@@ -37,26 +37,21 @@ const ChatWindow = ({ conversationId, onAskQuestion, questions }) => {
     return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  const getResponseForQuestion = (question) => {
-    const conversationsData = require("../../data/conversations.json");
-    const response = conversationsData.find(
-      (conversation) => conversation.question === question
-    )?.response;
-    return response || "Sorry, I don't have an answer for that.";
-  };
-
   const handleAskQuestion = (question) => {
     const currentTime = getCurrentTime();
     if (!conversationId) {
       onAskQuestion(question);
     } else {
-      const answer = getResponseForQuestion(question);
+      const conversationsData = require("../../data/conversations.json");
+      const answer = conversationsData.find(
+        (conversation) => conversation.question === question
+      )?.response;
 
       const updatedMessages = [
         ...messages,
         { text: question, sender: "User", time: currentTime },
         {
-          text: answer,
+          text: answer || "Sorry, I don't have an answer for that.",
           sender: "AI",
           time: currentTime,
           rating: null,
@@ -117,12 +112,6 @@ const ChatWindow = ({ conversationId, onAskQuestion, questions }) => {
     );
     closeModal();
     setSelectedRating(0);
-  };
-
-  const handleAskQuestionInActiveConversation = (question) => {
-    if (conversationId) {
-      handleAskQuestion(question);
-    }
   };
 
   return (
@@ -231,27 +220,70 @@ const ChatWindow = ({ conversationId, onAskQuestion, questions }) => {
               <img src={AiIcon} alt="AI Icon" />
             </div>
             <div className={styles.questionContainer}>
-              {questions.map((question, index) => (
-                <div
-                  key={index}
-                  className={styles.question}
-                  onClick={() => handleClickQuestion(question)}
-                >
-                  <h3>{question}</h3>
-                  <span className={styles.spanText}>
-                    Get immediate AI generated response
-                  </span>
-                </div>
-              ))}
+              <div
+                className={styles.question}
+                onClick={() =>
+                  handleClickQuestion(
+                    "How do you handle data persistence in mobile applications?"
+                  )
+                }
+              >
+                <h3>
+                  How do you handle data persistence in mobile applications?
+                </h3>
+                <span className={styles.spanText}>
+                  Get immediate AI generated response
+                </span>
+              </div>
+              <div
+                className={styles.question}
+                onClick={() =>
+                  handleClickQuestion(
+                    "Can you explain the concept of domain-driven design?"
+                  )
+                }
+              >
+                <h3>Can you explain the concept of domain-driven design?</h3>
+                <span className={styles.spanText}>
+                  Get immediate AI generated response
+                </span>
+              </div>
+              <div
+                className={styles.question}
+                onClick={() =>
+                  handleClickQuestion(
+                    "What is the role of machine learning in web development?"
+                  )
+                }
+              >
+                <h3>
+                  What is the role of machine learning in web development?
+                </h3>
+                <span className={styles.spanText}>
+                  Get immediate AI generated response
+                </span>
+              </div>
+              <div
+                className={styles.question}
+                onClick={() =>
+                  handleClickQuestion(
+                    "How do you stay updated with the latest technology trends?"
+                  )
+                }
+              >
+                <h3>
+                  How do you stay updated with the latest technology trends?
+                </h3>
+                <span className={styles.spanText}>
+                  Get immediate AI generated response
+                </span>
+              </div>
             </div>
           </div>
         </div>
       )}
       <div>
-        <QuestionAskField
-          onAskQuestion={handleAskQuestionInActiveConversation}
-          autoSubmit
-        />
+        <QuestionAskField onAskQuestion={handleAskQuestion} autoSubmit />
       </div>
       <Modal isOpen={showModal || showRatingModal} onClose={closeModal}>
         {showModal ? (
